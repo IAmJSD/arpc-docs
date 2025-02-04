@@ -1,0 +1,19 @@
+---
+import { Code as AstroCode } from "astro:components";
+
+// @ts-expect-error: I am having problems when I try to narrow this further, but this works, so its fine.
+type LangExtractor<X> = X extends (props: infer L) => any ? L["lang"] : never;
+
+interface Props {
+    class?: string;
+    code: string;
+    lang: LangExtractor<typeof AstroCode>;
+}
+
+const { code, lang, class: className } = Astro.props;
+---
+
+<AstroCode code={code} lang={lang} defaultColor={false} themes={{
+    light: "github-light",
+    dark: "github-dark",
+}} theme="github-light" class={className} />
