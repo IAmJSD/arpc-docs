@@ -1,0 +1,23 @@
+---
+import { frameworks } from "./shared";
+import HighlightTitle from "./HighlightTitle.astro";
+---
+
+<section class="flex-col max-w-sm">
+    <HighlightTitle icon="mdi:gear" title="Supports most TS web frameworks" />
+    <p class="my-4">
+        arpc supports the following frameworks on the server side, allowing you to use the same
+        TypeScript codebase you did before to manage your entire application lifecycle. It deeply
+        integrates with your code structure, so it shouldn't feel like a burden to use:
+    </p>
+    <ul class="list-disc list-inside">
+        {frameworks.map((framework) => (
+            <li>{framework}</li>
+        ))}
+    </ul>
+    <p class="mt-4">
+        In any supported framework, setting up the project is as simple as running <code>npx arpc init</code>
+        (or <code>bunx</code> for bun). After that, everything in this framework is the same regardless of
+        the web framework you are using.
+    </p>
+</section>

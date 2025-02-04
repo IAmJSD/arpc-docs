@@ -1,0 +1,24 @@
+---
+import HighlightTitle from "./HighlightTitle.astro";
+import { Code } from "astro:components";
+
+const authenticationPlaceholder = `export async function validate(token: string, tokenType: TokenTypes) {
+    // TODO: Return your user here.
+    return null;
+}`;
+
+const scaffoldedAuthenticationHandler = `// on your methods...
+...(arg: v.InferOutput<typeof input>, user: UserExport): ...`;
+---
+
+<section class="flex-col max-w-sm">
+    <HighlightTitle icon="mdi:crane" title="Scaffolding" />
+    <p class="my-4">
+        arpc supports scaffolding authentication/ratelimiting easily, allowing you to build your
+        authentication/ratelimiting files once, and then use them throughout your entire application
+        with the CLI scaffolding new methods based on it:
+    </p>
+    <Code class="p-4 rounded-xl" lang="bash" code="$ npx arpc scaffold authentication" />
+    <Code class="p-4 mt-4 rounded-xl" lang="ts" code={authenticationPlaceholder} />
+    <Code class="p-4 mt-4 rounded-xl" lang="ts" code={scaffoldedAuthenticationHandler} />
+</section>

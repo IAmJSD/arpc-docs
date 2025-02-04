@@ -1,0 +1,27 @@
+---
+import { Code } from "astro:components";
+import HighlightTitle from "./HighlightTitle.astro";
+import { cliExamples } from "./code";
+---
+
+<section class="flex-col max-w-sm">
+    <HighlightTitle icon="mdi:terminal" title="Simple CLI" />
+
+    <p class="mt-4">
+        arpc has a simple CLI that allows you to generate clients in many languages, control your
+        applications structure, and even lint for breaking changes in your API version. Everything from
+        setting up your project to bumping your API version, marking a breaking change, and creating the
+        scaffold for a new method is done through the CLI.
+    </p>
+
+    {
+        cliExamples.map((example) => (
+            <Code class="p-4 rounded-xl mt-4" lang="plaintext" code={example} />
+        ))
+    }
+
+    <p class="mt-4">
+        When you setup arpc, a GitHub Action is created that will automatically lint for breaking
+        changes in your pull requests against <code>main</code>.
+    </p>
+</section>

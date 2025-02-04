@@ -1,0 +1,19 @@
+---
+import HighlightTitle from "./HighlightTitle.astro";
+---
+
+<section class="flex-col max-w-sm">
+    <HighlightTitle title="Stacked APIs" icon="mdi:layers" />
+
+    <p class="mt-4">
+        When we make a breaking change to an API, we should push a new release. This is obvious, but yet so many people forget to do this. It's an easy mistake to make but with potentially application breaking consequences.
+    </p>
+
+    <p class="my-4">
+        The way this works is say you have an API V1 which has a bunch of functions. You probably don't want to have to manually copy each API, so instead when you call <code>arpc versions bump</code>, it will go ahead and create a stack. This means that when you want to break a method within your API, you can use <code>arpc methods break my.function</code>, and it will go ahead and create a copy (in this example, to <code>{"rpc/routes/<version>/my/function.ts"}</code>).
+    </p>
+
+    <p>
+        This also makes review much easier because the expectation of when the new files will be created is very clear.
+    </p>
+</section>

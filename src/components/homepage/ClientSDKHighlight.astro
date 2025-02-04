@@ -1,0 +1,59 @@
+---
+import { Code } from "astro:components";
+import { Tabs } from "astro-tabs";
+import HighlightTitle from "./HighlightTitle.astro";
+import { tsCode, pythonSyncCode, phpCode } from "./code";
+import TabLabel from "./TabLabel.astro";
+---
+
+<style is:inline>
+    .tab {
+        margin-right: 1rem;
+        user-select: none;
+    }
+
+    .tab-selector:checked ~ .tab {
+        font-weight: bold;
+    }
+
+    .panel {
+        margin-top: 1rem;
+    }
+</style>
+
+<section class="flex-col max-w-sm">
+    <HighlightTitle icon="mdi:language-box" title="Consistent, Beautiful Client SDK's" />
+
+    <p class="my-4">
+        arpc generates beautiful, consistent client SDK's for your application. These SDK's are
+        generated from the same interfaces you define on your server, so they are always consistent
+        with your local API structure:
+    </p>
+
+    <Tabs>
+        <Fragment slot="tab-1">
+            <TabLabel icon="mdi:language-typescript" title="TypeScript" />
+        </Fragment>
+        <Fragment slot="tab-2">
+            <TabLabel icon="mdi:language-python" title="Python (sync)" />
+        </Fragment>
+        <Fragment slot="tab-3">
+            <TabLabel icon="mdi:language-php" title="PHP" />
+        </Fragment>
+
+        <Fragment slot="panel-1">
+            <Code class="p-4 rounded-xl" lang="ts" code={tsCode} />
+        </Fragment>
+        <Fragment slot="panel-2">
+            <Code class="p-4 rounded-xl" lang="python" code={pythonSyncCode} />
+        </Fragment>
+        <Fragment slot="panel-3">
+            <Code class="p-4 rounded-xl" lang="php" code={phpCode} />
+        </Fragment>
+    </Tabs>
+
+    <p class="mt-4">
+        The SDK's automatically allow both basic types for when you do not need a large struct, and
+        complex types based off your server schema when you do.
+    </p>
+</section>

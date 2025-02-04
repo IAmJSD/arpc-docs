@@ -1,6 +1,5 @@
 ---
 title: Getting started with arpc
-back: /
 ---
 
 To get started with arpc, you need to init it within a supported framework:
@@ -49,7 +48,7 @@ From here, we can run `arpc methods create users.get` to create aa unique API me
 - `mutation`: Defines if this route is a mutation. A mutation is an aciton that alters data. Used internally for routing.
 - `parallel`: Defines if when in a atomic request if this can run parallel with other request items. If the server processor hits a item where this is false, the whole atomic request will pause whilst this runs.
 
-The result 
+The result
 
 When you change an API, you should make sure that you bump the version if you are making breaking changes. The [CI action](#ci-action) will check that you have bumped the version when you have made breaking changes.
 

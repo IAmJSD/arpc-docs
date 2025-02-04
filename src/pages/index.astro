@@ -1,0 +1,73 @@
+---
+import MainLayout from "@/layouts/MainLayout.astro";
+import { frameworks } from "@/components/homepage/shared";
+import ButtonLink from "@/components/homepage/ButtonLink.astro";
+import FrameworksHighlight from "@/components/homepage/FrameworksHighlight.astro";
+import ScaffoldHighlight from "@/components/homepage/ScaffoldHighlight.astro";
+import ClientSDKHighlight from "@/components/homepage/ClientSDKHighlight.astro";
+import CLIHighlight from "@/components/homepage/CLIHighlight.astro";
+import AtomicHighlight from "@/components/homepage/AtomicHighlight.astro";
+import StackedAPIsHighlight from "@/components/homepage/StackedAPIsHighlight.astro";
+---
+
+<MainLayout title="" description="arpc is a simple and clean RPC framework for TypeScript developers.">
+	<header class="w-full dark:bg-slate-800 bg-slate-100">
+		<div class="justify-center max-w-lg mx-auto p-10 pb-20">
+			<h1 class="text-9xl font-bold text-center">
+				<img src="/favicon.svg" aria-hidden="true" class="inline-block select-none" /> arpc
+			</h1>
+			<h2 class="text-center mt-8">
+				Want a framework for simple, standardized RPC across different client languages for your
+				<span id="_hero_typewriter" aria-live="polite">{frameworks[0]}</span> project?
+			</h2>
+			<div class="flex flex-wrap justify-center space-x-4 space-y-4 mt-4">
+				<ButtonLink href="https://github.com/iamjsd/arpc" icon="cib:github" label="GitHub" />
+				<ButtonLink href="/docs" icon="mdi:book-open-variant" label="Documentation" />
+				<ButtonLink href="https://discord.gg/TmAQ4nqxhx" icon="cib:discord" label="Discord" />
+			</div>
+		</div>
+	</header>
+
+	<div class="w-full mx-4">
+		<main class="max-w-7xl mx-auto my-8 flex flex-wrap gap-8 justify-center">
+			<FrameworksHighlight />
+			<ScaffoldHighlight />
+			<ClientSDKHighlight />
+			<CLIHighlight />
+			<AtomicHighlight />
+			<StackedAPIsHighlight />
+		</main>
+	</div>
+</MainLayout>
+
+<script>
+	import { frameworks } from "@/components/homepage/shared";
+
+	// @ts-expect-error: no declaration file
+	import Typewriter from "typewriter-effect/dist/core";
+
+	// Defines the typewriter effect but accessible.
+	document.addEventListener("astro:page-load", () => {
+		const typewriterElement = document.getElementById("_hero_typewriter");
+		if (typewriterElement) {
+			const writer = new Typewriter(typewriterElement);
+			let i = 0;
+			function run() {
+				// Make sure the element is still in the DOM.
+				if (typewriterElement!.parentElement === null) return;
+
+				// Set the aria label.
+				typewriterElement!.setAttribute("aria-label", frameworks[i]);
+
+				// Go ahead and write the current string.
+				writer.deleteAll().typeString(frameworks[i]).start();
+
+				// Spawn a new iteration.
+				i++;
+				if (i === frameworks.length) i = 0;
+				setTimeout(run, 2000);
+			}
+			run();
+		}
+	});
+</script>

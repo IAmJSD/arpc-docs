@@ -1,0 +1,28 @@
+---
+import HighlightTitle from "./HighlightTitle.astro";
+import AtomicMD from "./atomic.md";
+---
+
+<style is:inline>
+    #atomic_highlight > .astro-code {
+        border-radius: var(--radius-xl);
+        padding: calc(var(--spacing) * 4);
+        font-size: 0.8rem;
+    }
+
+    #atomic_highlight > * {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    #atomic_highlight a {
+        text-decoration: underline;
+    }
+</style>
+
+<section class="flex-col max-w-sm">
+    <HighlightTitle icon="mdi:database" title="Atomicity" />
+    <span id="atomic_highlight">
+        <AtomicMD />
+    </span>
+</section>

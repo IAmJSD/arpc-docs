@@ -1,0 +1,35 @@
+---
+import "@/global.css";
+import { ClientRouter } from "astro:transitions";
+
+interface Props {
+    title: string;
+    description: string;
+}
+
+const { title, description } = Astro.props;
+
+const pageTitle = title ? `arpc | ${title}` : "arpc";
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+        <title>{pageTitle}</title>
+        <meta name="description" content={description} />
+        <meta name="twitter:image" content="/favicon.svg" />
+        <meta name="og:type" content="website" />
+        <meta name="og:name" content={pageTitle} />
+        <meta name="og:description" content={description} />
+        <meta name="og:url" content="https://arpc.dev" />
+        <ClientRouter />
+	</head>
+
+	<body transition:animate="none" class="dark:bg-slate-950 dark:text-white">
+		<slot />
+	</body>
+</html>
