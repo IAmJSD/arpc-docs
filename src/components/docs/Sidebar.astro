@@ -1,0 +1,70 @@
+---
+import Icon from "node_modules/astro-icon/components/Icon.astro";
+---
+
+<nav class="mx-4">
+    <p class="text-center text-3xl font-bold select-none my-4 mx-auto flex justify-center lg:block">
+        <a href="/">
+            <img src="/favicon.svg" aria-hidden="true" class="inline-block w-10 h-10" /> arpc
+        </a>
+        <button class="lg:hidden cursor-pointer ml-4" id="_collapse_button" tabindex="-1" aria-hidden="true">
+            <Icon name="lucide:menu" class="w-6 h-6" />
+        </button>
+    </p>
+    <div class="lg:block hidden mt-6" id="_sidebar_collapser">
+        <div id="_sidebar_content" aria-hidden="true"></div>
+        <hr class="border-gray-200 dark:border-gray-800 mt-4 lg:hidden" />
+    </div>
+</nav>
+
+<script>
+    import { getSidebarData } from "@/utils/getSidebarData";
+
+    type UnwrapPromise<T> = T extends () => Promise<infer U> ? U : T;
+
+    function createSidebar(element: HTMLElement, sidebarData: UnwrapPromise<typeof getSidebarData>) {
+        for (const item of sidebarData) {
+            if ("category" in item) {
+                const p = document.createElement("p");
+                p.textContent = item.category;
+                p.className = "font-bold text-lg border-gray-200 pb-2 not-first:mt-3";
+                element.appendChild(p);
+                createSidebar(element, item.items);
+            } else {
+                const p = document.createElement("p");
+                const a = document.createElement("a");
+                a.href = item.link;
+                a.textContent = item.title;
+                a.className = "underline";
+                p.appendChild(a);
+                p.className = "text-sm";
+                element.appendChild(p);
+            }
+        }
+    }
+
+    document.addEventListener("astro:page-load", async () => {
+        // Create the sidebar. We also know this is a docs page if this doesn't return.
+        const sidebarContent = document.getElementById("_sidebar_content");
+        if (!sidebarContent) return;
+        const sidebarData = await getSidebarData();
+        sidebarContent.innerHTML = "";
+        createSidebar(sidebarContent, sidebarData);
+
+        // Check if the sidebar is open or not.
+        const sidebarCollapser = document.getElementById("_sidebar_collapser")!;
+        // @ts-expect-error: Worst case this will be undefined.
+        if (window.__SIDEBAR_OPEN__) {
+            // Handle previous state.
+            sidebarCollapser.classList.remove("hidden");
+        }
+
+        // Add an event listener to the collapse button.
+        const collapseButton = document.getElementById("_collapse_button")!;
+        collapseButton.addEventListener("click", () => {
+            sidebarCollapser.classList.toggle("hidden");
+            // @ts-expect-error: Worst case this will be undefined.
+            window.__SIDEBAR_OPEN__ = !window.__SIDEBAR_OPEN__;
+        });
+    });
+</script>

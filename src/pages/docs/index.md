@@ -1,5 +1,8 @@
 ---
+layout: "@/layouts/DocsLayout.astro"
 title: Getting started with arpc
+description: Setting up arpc in your project.
+back: /
 ---
 
 To get started with arpc, you need to init it within a supported framework:
@@ -43,12 +46,12 @@ From here, any generated code will have a boolean and take in the user from with
 
 After we have scaffolded authentication, we need to create a new API version. To do this, we should run `arpc versions bump`. This will create API V1.
 
-From here, we can run `arpc methods create users.get` to create aa unique API method. It is worth noting that this namespace will be both reflected in the client and server structures (on the client, you will have `client.users.get`, and on the server you will have `rpc/routes/v1/users/get.ts`). The file will contain sane flags within the file that handle all of the following:
+From here, we can run `arpc methods create users.get` to create a unique API method. It is worth noting that this namespace will be both reflected in the client and server structures (on the client, you will have `client.users.get`, and on the server you will have `rpc/routes/v1/users/get.ts`). The file will contain sane flags within the file that handle all of the following:
 
 - `mutation`: Defines if this route is a mutation. A mutation is an aciton that alters data. Used internally for routing.
 - `parallel`: Defines if when in a atomic request if this can run parallel with other request items. If the server processor hits a item where this is false, the whole atomic request will pause whilst this runs.
 
-The result
+The result TODO
 
 When you change an API, you should make sure that you bump the version if you are making breaking changes. The [CI action](#ci-action) will check that you have bumped the version when you have made breaking changes.
 

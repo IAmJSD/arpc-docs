@@ -1,12 +1,12 @@
 // @ts-check
 import { defineConfig } from "astro/config";
-
 import tailwindcss from "@tailwindcss/vite";
-
 import icon from "astro-icon";
+import sitemap from "@astrojs/sitemap";
 
 // https://astro.build/config
 export default defineConfig({
+    site: "https://arpc.dev",
     vite: {
         plugins: [tailwindcss()],
     },
@@ -19,5 +19,8 @@ export default defineConfig({
             defaultColor: false,
         },
     },
-    integrations: [icon()],
+    integrations: [icon(), sitemap()],
+    prefetch: {
+        prefetchAll: true,
+    },
 });

@@ -1,0 +1,45 @@
+---
+import MainLayout from "./MainLayout.astro";
+import Sidebar from "@/components/docs/Sidebar.astro";
+import NavButtons from "@/components/docs/NavButtons.astro";
+
+interface Props {
+    frontmatter: {
+        title: string;
+        description: string;
+        back?: string;
+        next?: string;
+    };
+}
+
+const { frontmatter } = Astro.props;
+---
+
+<MainLayout title={frontmatter.title} description={frontmatter.description}>
+    <div class="lg:flex max-w-7xl mx-auto">
+        <div class="lg:flex-col w-full lg:w-60">
+            <Sidebar />
+        </div>
+
+        <div class="lg:flex-col flex-grow w-full text-wrap">
+            <div class="block overflow-y-auto h-full md:h-screen">
+                <div class="m-4">
+                    <header class="border-b border-gray-200 dark:border-gray-800 pb-4 mb-4">
+                        <h1 class="text-3xl font-bold">
+                            {frontmatter.title}
+                        </h1>
+                        <h2 class="text-md mt-2">
+                            {frontmatter.description}
+                        </h2>
+                    </header>
+                    <main class="md">
+                        <slot />
+                    </main>
+                    <footer class="mt-4">
+                        <NavButtons back={frontmatter.back} next={frontmatter.next} />
+                    </footer>
+                </div>
+            </div>
+        </div>
+    </div>
+</MainLayout>

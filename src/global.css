@@ -1,9 +1,5 @@
 @import "tailwindcss";
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 .astro-code,
 .astro-code span {
     color: var(--shiki-light) !important;
@@ -22,4 +18,32 @@
         font-weight: var(--shiki-dark-font-weight) !important;
         text-decoration: var(--shiki-dark-text-decoration) !important;
     }
+}
+
+.md * {
+    @apply mb-4;
+}
+
+.md a {
+    @apply underline;
+}
+
+.md ul {
+    @apply list-disc list-inside;
+}
+
+.md pre {
+    @apply p-4 rounded-xl;
+}
+
+.md h2 {
+    @apply text-2xl font-bold;
+}
+
+.md h3 {
+    @apply text-xl font-bold;
+}
+
+.md h4 {
+    @apply text-lg font-bold;
 }

@@ -1,0 +1,81 @@
+---
+import { Icon } from "astro-icon/components";
+
+interface Props {
+    back?: string;
+    next?: string;
+}
+
+const { back, next } = Astro.props;
+---
+
+<span class="w-full">
+    <div class="flex space-x-4 mx-auto w-max mb-4">
+        {
+            back && (
+                <a class="flex-col" href={back}>
+                    <div class="block border border-gray-200 dark:border-gray-800 rounded-md p-2">
+                        <div class="flex items-center justify-center">
+                            <div class="flex-col mr-2 my-auto">
+                                <Icon name="lucide:arrow-left" class="w-4 h-4" />
+                            </div>
+                            <div class="flex-col my-auto">
+                                <p class="text-lg font-bold">Back</p>
+                                <p class="text-md" aria-live="polite" data-title-from={back}>&nbsp;</p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            )
+        }
+        {
+            next && (
+                <a class="flex-col" href={next}>
+                    <div class="block border border-gray-200 dark:border-gray-800 rounded-md p-2">
+                        <div class="flex items-center justify-center">
+                            <div class="flex-col mr-2 my-auto">
+                                <Icon name="lucide:arrow-right" class="w-4 h-4" />
+                            </div>
+                            <div class="flex-col my-auto">
+                                <p class="text-lg font-bold">Forward</p>
+                                <p class="text-md" aria-live="polite" data-title-from={next}>&nbsp;</p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            )
+        }
+    </div>
+</span>
+
+<script>
+    import { getSidebarData } from "@/utils/getSidebarData";
+
+    // Handles when the page is loaded and gets the title from the sidebar metadata.
+    document.addEventListener("astro:page-load", () => {
+        const selector = document.querySelectorAll("[data-title-from]");
+        selector.forEach((element) => {
+            const url = element.getAttribute("data-title-from")!;
+            if (url === "/") {
+                // special case
+                element.textContent = "Homepage";
+            } else {
+                getSidebarData().then((sidebarData) => {
+                    function lookForUrl(items: typeof sidebarData): string | null {
+                        for (const item of items) {
+                            // @ts-expect-error: This is technically wrong because link might not be there, but
+                            // worst case scenario it is undefined and the check fails anyway. Don't care.
+                            if (item.link === url) return (item as { title: string }).title;
+                            const v = lookForUrl((item as { items: typeof sidebarData }).items);
+                            if (v) return v;
+                        }
+                        return null;
+                    }
+                    const title = lookForUrl(sidebarData);
+                    if (!title) throw new Error(`No title found for ${url}`);
+                    element.textContent = title;
+                });
+            }
+        });
+    });
+</script>

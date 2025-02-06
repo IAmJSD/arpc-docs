@@ -26,10 +26,15 @@ const pageTitle = title ? `arpc | ${title}` : "arpc";
         <meta name="og:name" content={pageTitle} />
         <meta name="og:description" content={description} />
         <meta name="og:url" content="https://arpc.dev" />
+        <link rel="sitemap" type="application/xml" href="/sitemap-index.xml" />
         <ClientRouter />
 	</head>
 
 	<body transition:animate="none" class="dark:bg-slate-950 dark:text-white">
+        <script is:inline>
+            // The sidebar data is needed across the whole app.
+            window.__SIDEBAR_DATA__ = fetch("/sidebar.json").then((res) => res.json());
+        </script>
 		<slot />
 	</body>
 </html>
