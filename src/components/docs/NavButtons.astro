@@ -10,7 +10,7 @@ const { back, next } = Astro.props;
 ---
 
 <span class="w-full">
-    <div class="flex space-x-4 mx-auto w-max mb-4">
+    <div class="flex space-x-4 mx-auto w-max my-8">
         {
             back && (
                 <a class="flex-col" href={back}>
@@ -49,7 +49,7 @@ const { back, next } = Astro.props;
 </span>
 
 <script>
-    import { getSidebarData } from "@/utils/getSidebarData";
+    import { sidebarData } from "@/utils/sidebarData";
 
     // Handles when the page is loaded and gets the title from the sidebar metadata.
     document.addEventListener("astro:page-load", () => {
@@ -60,14 +60,15 @@ const { back, next } = Astro.props;
                 // special case
                 element.textContent = "Homepage";
             } else {
-                getSidebarData().then((sidebarData) => {
+                sidebarData.then((sidebarData) => {
                     function lookForUrl(items: typeof sidebarData): string | null {
                         for (const item of items) {
-                            // @ts-expect-error: This is technically wrong because link might not be there, but
-                            // worst case scenario it is undefined and the check fails anyway. Don't care.
-                            if (item.link === url) return (item as { title: string }).title;
-                            const v = lookForUrl((item as { items: typeof sidebarData }).items);
-                            if (v) return v;
+                            if ("link" in item) {
+                                if (item.link === url) return item.title;
+                            } else {
+                                const v = lookForUrl(item.items);
+                                if (v) return v;
+                            }
                         }
                         return null;
                     }

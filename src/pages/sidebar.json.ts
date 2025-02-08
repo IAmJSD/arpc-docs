@@ -36,8 +36,12 @@ function clean(str: string) {
         .join(" ");
 }
 
+function sortedWithIndexOnTop(arr: string[]) {
+    return [...arr.filter((s) => s.startsWith("index")), ...arr.filter((s) => !s.startsWith("index"))];
+}
+
 async function renderSidebarCategory(pathPrefix: string, dir: string, category: string): Promise<SidebarCategory> {
-    const files = await readdir(dir);
+    const files = sortedWithIndexOnTop(await readdir(dir));
     const items: (Link | SidebarCategory)[] = [];
     const folders: string[] = [];
     for (const fileOrDir of files) {
@@ -55,6 +59,15 @@ async function renderSidebarCategory(pathPrefix: string, dir: string, category: 
         // Parse the link.
         const fileInfo = fileOrDir === "index.md" ? "" : `/${fileOrDir.replace(/\.md$/, "")}`;
         items.push(parseLink(file, `/docs${pathPrefix}${fileInfo}`));
+    }
+
+    // Put any folder with the name "server" at the top of the list.
+    const serverFolder = folders.find((f) => f === "server");
+    if (serverFolder) {
+        items.push(
+            await renderSidebarCategory(`${pathPrefix}/${serverFolder}`, join(dir, serverFolder), clean(serverFolder)),
+        );
+        folders.splice(folders.indexOf(serverFolder), 1);
     }
 
     for (const folder of folders) {

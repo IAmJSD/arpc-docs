@@ -30,10 +30,10 @@ const pageTitle = title ? `arpc | ${title}` : "arpc";
         <ClientRouter />
 	</head>
 
-	<body transition:animate="none" class="dark:bg-slate-950 dark:text-white">
+	<body transition:animate="none" class="dark:bg-slate-950 dark:text-white overflow-x-hidden">
         <script is:inline>
             // The sidebar data is needed across the whole app.
-            window.__SIDEBAR_DATA__ = fetch("/sidebar.json").then((res) => res.json());
+            if (!window.__SIDEBAR_DATA__) window.__SIDEBAR_DATA__ = fetch("/sidebar.json").then((res) => res.json());
         </script>
 		<slot />
 	</body>

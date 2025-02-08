@@ -18,10 +18,12 @@
         "astro": "^5.2.3",
         "astro-icon": "^1.1.5",
         "astro-tabs": "^0.1.8",
+        "rehype-autolink-headings": "^7.1.0",
         "tailwindcss": "^4.0.3",
         "typewriter-effect": "^2.21.0"
     },
     "devDependencies": {
+        "hastscript": "^9.0.0",
         "prettier": "^3.4.2",
         "sass-embedded": "^1.83.4"
     }

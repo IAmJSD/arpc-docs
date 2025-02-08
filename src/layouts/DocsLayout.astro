@@ -17,7 +17,7 @@ const { frontmatter } = Astro.props;
 
 <MainLayout title={frontmatter.title} description={frontmatter.description}>
     <div class="lg:flex max-w-7xl mx-auto">
-        <div class="lg:flex-col w-full lg:w-60">
+        <div class="lg:flex-col w-full lg:w-64 print:hidden">
             <Sidebar />
         </div>
 
@@ -35,7 +35,7 @@ const { frontmatter } = Astro.props;
                     <main class="md">
                         <slot />
                     </main>
-                    <footer class="mt-4">
+                    <footer class="mt-4 print:hidden">
                         <NavButtons back={frontmatter.back} next={frontmatter.next} />
                     </footer>
                 </div>

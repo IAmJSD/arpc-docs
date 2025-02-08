@@ -29,7 +29,15 @@
 }
 
 .md ul {
-    @apply list-disc list-inside;
+    @apply list-disc pl-4 my-6;
+}
+
+.md ol {
+    @apply list-decimal pl-4 my-6;
+}
+
+.md li > pre {
+    @apply mt-4;
 }
 
 .md pre {
@@ -46,4 +54,23 @@
 
 .md h4 {
     @apply text-lg font-bold;
+}
+
+a:has(> span.icon-link) {
+    text-decoration: none !important;
+}
+
+h2 .icon-link::before {
+    content: "🔗";
+    filter: brightness(0);
+    margin-right: 0.25rem;
+    margin-left: -0.3rem;
+    text-decoration-line: none !important;
+    @apply print:hidden;
+}
+
+@media (prefers-color-scheme: dark) {
+    h2 .icon-link::before {
+        filter: brightness(0) invert(1);
+    }
 }

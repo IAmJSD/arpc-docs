@@ -3,6 +3,7 @@ layout: "@/layouts/DocsLayout.astro"
 title: Getting started with arpc
 description: Setting up arpc in your project.
 back: /
+next: /docs/versioning
 ---
 
 To get started with arpc, you need to init it within a supported framework:
@@ -51,10 +52,45 @@ From here, we can run `arpc methods create users.get` to create a unique API met
 - `mutation`: Defines if this route is a mutation. A mutation is an aciton that alters data. Used internally for routing.
 - `parallel`: Defines if when in a atomic request if this can run parallel with other request items. If the server processor hits a item where this is false, the whole atomic request will pause whilst this runs.
 
-The result TODO
+The result will be determined and the input will be validated by the schemas inside of the rpc file. When you edit them, the types across everything will reflect the changes you make.
 
 When you change an API, you should make sure that you bump the version if you are making breaking changes. The [CI action](#ci-action) will check that you have bumped the version when you have made breaking changes.
 
-## CI Action
+During installation, your web server configuration is automatically overrided to watch arpc for changes. Any changes you make to the schema within the file will automatically be reflected in the server/documentation/client schema, you only need to change one place.
+
+### CI Action
 
 You will also notice that the framework made a GitHub Actions workflow inside your application. The way this works is that when you make pull requests, it will check against the `main` branch to ensure that the API has not been broken without a new version being released.
+
+## Ratelimiting
+
+If we wish to setup ratelimiting, we can use `arpc scaffold ratelimiting`. This will make this file which we can edit to define how the ratelimiting will work:
+
+```ts
+import type { UserExport } from "./authentication";
+import { Ratelimited } from "@arpc-packages/core";
+
+export default async function ratelimit(methodName: string, arg: any, user: UserExport) {
+    // TODO: Implement your ratelimiting logic here. If a user is ratelimited, you
+    // should throw a Ratelimited error.
+}
+```
+
+Note that you can use hooks inside of this method such as `useRequest` to do more complex ratelimiting. If the user is ratelimited, you should throw a `Ratelimited` error.
+
+## Server Actions
+
+If you wish to use your RPC methods on the server side (for example, in a server component), you can use the `self` handler in the RPC folder. When you import it, you can call it like the following:
+
+```ts
+import * as rpc from "@/rpc";
+
+// ...
+
+// if the user is unauthenticated, you do not provider the parameter here:
+// We mostly use the same dot notation as the client, but the version is first.
+const meme = await self().v1.memes.getFirst();
+
+// Or if the user is authenticated, you can provide the user:
+const meme = await self(user).v1.memes.getFirst();
+```

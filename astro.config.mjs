@@ -3,6 +3,8 @@ import { defineConfig } from "astro/config";
 import tailwindcss from "@tailwindcss/vite";
 import icon from "astro-icon";
 import sitemap from "@astrojs/sitemap";
+import { rehypeHeadingIds } from "@astrojs/markdown-remark";
+import rehypeAutolinkHeadings from "rehype-autolink-headings";
 
 // https://astro.build/config
 export default defineConfig({
@@ -18,6 +20,7 @@ export default defineConfig({
             },
             defaultColor: false,
         },
+        rehypePlugins: [rehypeHeadingIds, rehypeAutolinkHeadings],
     },
     integrations: [icon(), sitemap()],
     prefetch: {

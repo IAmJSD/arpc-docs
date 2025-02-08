@@ -18,12 +18,12 @@ import Icon from "node_modules/astro-icon/components/Icon.astro";
 </nav>
 
 <script>
-    import { getSidebarData } from "@/utils/getSidebarData";
+    import { sidebarData } from "@/utils/sidebarData";
 
-    type UnwrapPromise<T> = T extends () => Promise<infer U> ? U : T;
+    type UnwrapPromise<T> = T extends Promise<infer U> ? U : T;
 
-    function createSidebar(element: HTMLElement, sidebarData: UnwrapPromise<typeof getSidebarData>) {
-        for (const item of sidebarData) {
+    function createSidebar(element: HTMLElement, sidebarDataRes: UnwrapPromise<typeof sidebarData>) {
+        for (const item of sidebarDataRes) {
             if ("category" in item) {
                 const p = document.createElement("p");
                 p.textContent = item.category;
@@ -37,7 +37,7 @@ import Icon from "node_modules/astro-icon/components/Icon.astro";
                 a.textContent = item.title;
                 a.className = "underline";
                 p.appendChild(a);
-                p.className = "text-sm";
+                p.className = "text-md mb-2";
                 element.appendChild(p);
             }
         }
@@ -47,9 +47,9 @@ import Icon from "node_modules/astro-icon/components/Icon.astro";
         // Create the sidebar. We also know this is a docs page if this doesn't return.
         const sidebarContent = document.getElementById("_sidebar_content");
         if (!sidebarContent) return;
-        const sidebarData = await getSidebarData();
+        const sidebarDataRes = await sidebarData;
         sidebarContent.innerHTML = "";
-        createSidebar(sidebarContent, sidebarData);
+        createSidebar(sidebarContent, sidebarDataRes);
 
         // Check if the sidebar is open or not.
         const sidebarCollapser = document.getElementById("_sidebar_collapser")!;
