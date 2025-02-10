@@ -56,6 +56,10 @@
     @apply text-lg font-bold;
 }
 
+.md blockquote {
+    @apply bg-gray-100 dark:bg-gray-800 p-4 rounded-xl *:mb-0;
+}
+
 a:has(> span.icon-link) {
     text-decoration: none !important;
 }
