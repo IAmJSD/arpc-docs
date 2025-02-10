@@ -61,7 +61,7 @@ useRollback(async () => {
 
 ## `useDatabaseTransaction`
 
-> **NOTE:** For this to have expected behaviour, the `transaction` function must be split out from your RPC function.
+> **NOTE:** For this to have expected behaviour, the `transaction` function must be split out from your RPC function. Additionally, your transaction object must have a `commit` and `rollback` method (these can return a `Promise` or be sync, that doesn't matter, promises will be awaited).
 
 This hook is used to share a database transaction between multiple calls in your atomic request. This is useful for maintaining atomicity of database operations since any failures will cause all operations to be rolled back. To use this, you should pass in either a async or sync function that returns a `Promise<YourTransactionType>` or `YourTransactionType` respectively. **You do NOT need to (and probably shouldn't) actually commit or rollback the transaction yourself. This hook does all of that for you. It doesn't, however, change the type, and if you do that, it will perform that act on the held transaction and then drop it from the internal state.**
 
