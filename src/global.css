@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* dunno why I need this */
+@module "./components";
+
 .astro-code,
 .astro-code span {
     color: var(--shiki-light) !important;
