@@ -1,0 +1,40 @@
+[
+    {
+        "link": "/docs",
+        "title": "Getting started with arpc"
+    },
+    {
+        "link": "/docs/versioning",
+        "title": "Versioning"
+    },
+    {
+        "category": "Server",
+        "items": [
+            {
+                "link": "/docs/server/atomics",
+                "title": "Atomic Structure"
+            },
+            {
+                "link": "/docs/server/hooks",
+                "title": "Server Hooks"
+            },
+            {
+                "link": "/docs/server/exceptions",
+                "title": "Exceptions"
+            }
+        ]
+    },
+    {
+        "category": "Client",
+        "items": [
+            {
+                "link": "/docs/client/support",
+                "title": "Client Support"
+            },
+            {
+                "link": "/docs/client/atomics",
+                "title": "Atomic Clients"
+            }
+        ]
+    }
+]

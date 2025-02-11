@@ -1,7 +1,9 @@
 ---
+layout: "@/layouts/DocsLayout.astro"
 title: Exceptions
 description: Learn how to handle exceptions in your RPC server.
-layout: "@/layouts/DocsLayout.astro"
+back: "/docs/server/hooks"
+next: "/docs/client/support"
 ---
 
 TODO

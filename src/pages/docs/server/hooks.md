@@ -3,7 +3,7 @@ layout: "@/layouts/DocsLayout.astro"
 title: Server Hooks
 description: Server hooks are a way to hook into the atomic lifecycle of a request.
 back: "/docs/server/atomics"
-next: "/docs/server/server-exceptions"
+next: "/docs/server/exceptions"
 ---
 
 As mentioned previously, server hooks are used to hook into the atomic lifecycle of a request (with the same behaviour when the request isn't atomic). Hooks can be used in any part of the request handling (including middleware). Here are the various hooks you can use:

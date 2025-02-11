@@ -7,12 +7,12 @@ import Icon from "node_modules/astro-icon/components/Icon.astro";
         <a href="/">
             <img src="/favicon.svg" aria-hidden="true" class="inline-block w-10 h-10" /> arpc
         </a>
-        <button class="lg:hidden cursor-pointer ml-4" id="_collapse_button" tabindex="-1" aria-hidden="true">
+        <button class="lg:hidden cursor-pointer ml-4" id="_collapse_button" aria-controls="_sidebar_collapser" aria-expanded="false">
             <Icon name="lucide:menu" class="w-6 h-6" />
         </button>
     </p>
     <div class="lg:block hidden mt-6" id="_sidebar_collapser">
-        <div id="_sidebar_content" aria-hidden="true"></div>
+        <div id="_sidebar_content"></div>
         <hr class="border-gray-200 dark:border-gray-800 mt-4 lg:hidden" />
     </div>
 </nav>
@@ -25,10 +25,10 @@ import Icon from "node_modules/astro-icon/components/Icon.astro";
     function createSidebar(element: HTMLElement, sidebarDataRes: UnwrapPromise<typeof sidebarData>) {
         for (const item of sidebarDataRes) {
             if ("category" in item) {
-                const p = document.createElement("p");
-                p.textContent = item.category;
-                p.className = "font-bold text-lg border-gray-200 pb-2 not-first:mt-3";
-                element.appendChild(p);
+                const h2 = document.createElement("h2");
+                h2.textContent = item.category;
+                h2.className = "font-bold text-lg border-gray-200 pb-2 not-first:mt-3";
+                element.appendChild(h2);
                 createSidebar(element, item.items);
             } else {
                 const p = document.createElement("p");
@@ -65,6 +65,8 @@ import Icon from "node_modules/astro-icon/components/Icon.astro";
             sidebarCollapser.classList.toggle("hidden");
             // @ts-expect-error: Worst case this will be undefined.
             window.__SIDEBAR_OPEN__ = !window.__SIDEBAR_OPEN__;
+            // @ts-expect-error: We set this above.
+            collapseButton.ariaExpanded = window.__SIDEBAR_OPEN__ ? "true" : "false";
         });
     });
 </script>
