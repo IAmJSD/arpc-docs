@@ -13,6 +13,9 @@ import Icon from "node_modules/astro-icon/components/Icon.astro";
     </p>
     <div class="lg:block hidden mt-6" id="_sidebar_collapser">
         <div id="_sidebar_content"></div>
+        <span class="hidden font-bold text-lg border-gray-200 pb-2 not-first:mt-3 mb-2 text-md underline">
+            <!-- This exists because for some reason, the tailwind classes are not being written to the CSS. This ensures they will. -->
+        </span>
         <hr class="border-gray-200 dark:border-gray-800 mt-4 lg:hidden" />
     </div>
 </nav>
