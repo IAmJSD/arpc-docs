@@ -9,7 +9,7 @@ interface Props {
 
 const { title, description } = Astro.props;
 
-const pageTitle = title ? `arpc | ${title}` : "arpc";
+const pageTitle = title ? `${title} | arpc` : "arpc";
 ---
 
 <html lang="en">
@@ -38,3 +38,28 @@ const pageTitle = title ? `arpc | ${title}` : "arpc";
 		<slot />
 	</body>
 </html>
+
+<script>
+    // Every browser except Chrome has suddenly decided to break the favicon.svg file outside of
+    // the side icon. This is a fix for that, applied globally since it is used globally.
+    const isChrome = navigator.userAgent.includes("Chrome");
+    if (!isChrome) {
+        const FAVICON_FETCH_RESULT = fetch("/favicon.svg").then((r) => r.text());
+        document.addEventListener("astro:page-load", async () => {
+            const els = document.querySelectorAll("[data-logo-dark-fix]");
+            for (const el of els) {
+                // Parse the SVG. TS is wrong here.
+                const parsedSvg = new DOMParser().parseFromString(await FAVICON_FETCH_RESULT, "image/svg+xml").documentElement as unknown as SVGElement;
+
+                // Go through this elements attributes and apply them to the new SVG.
+                for (const attr of el.attributes) {
+                    if (attr.name === "data-logo-dark-fix" || attr.name === "src") continue;
+                    parsedSvg.setAttribute(attr.name, attr.value);
+                }
+
+                // Replace the element with the new SVG.
+                el.replaceWith(parsedSvg);
+            }
+        });
+    }
+</script>
