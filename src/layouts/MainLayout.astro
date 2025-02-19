@@ -41,7 +41,7 @@ const pageTitle = title ? `${title} | arpc` : "arpc";
 
 <script>
     // Every browser except Chrome has suddenly decided to break the favicon.svg file outside of
-    // the side icon. This is a fix for that, applied globally since it is used globally.
+    // the site icon. This is a fix for that, applied globally since it is used globally.
     const isChrome = navigator.userAgent.includes("Chrome");
     if (!isChrome) {
         const FAVICON_FETCH_RESULT = fetch("/favicon.svg").then((r) => r.text());
@@ -49,7 +49,9 @@ const pageTitle = title ? `${title} | arpc` : "arpc";
             const els = document.querySelectorAll("[data-logo-dark-fix]");
             for (const el of els) {
                 // Parse the SVG. TS is wrong here.
-                const parsedSvg = new DOMParser().parseFromString(await FAVICON_FETCH_RESULT, "image/svg+xml").documentElement as unknown as SVGElement;
+                const parsedSvg = new DOMParser().parseFromString(
+                    await FAVICON_FETCH_RESULT, "image/svg+xml",
+                ).documentElement as unknown as SVGElement;
 
                 // Go through this elements attributes and apply them to the new SVG.
                 for (const attr of el.attributes) {
