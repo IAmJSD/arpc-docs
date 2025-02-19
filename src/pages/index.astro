@@ -16,9 +16,13 @@ import StackedAPIsHighlight from "@/components/homepage/StackedAPIsHighlight.ast
 			<h1 class="text-9xl font-bold text-center">
 				<img data-logo-dark-fix src="/favicon.svg" aria-hidden="true" class="inline-block select-none" /> arpc
 			</h1>
-			<h2 class="text-center mt-8">
+			<h2 class="sr-only">
 				Want a framework for simple, standardized RPC across different client languages for your
-				<span id="_hero_typewriter" aria-live="polite">{frameworks[0]}</span> project?
+				TypeScript project?
+			</h2>
+			<h2 class="text-center mt-8" aria-hidden="true">
+				Want a framework for simple, standardized RPC across different client languages for your
+				<span id="_hero_typewriter">{frameworks[0]}</span> project?
 			</h2>
 			<div class="flex flex-wrap justify-center space-x-4 space-y-4 mt-4">
 				<ButtonLink href="https://github.com/iamjsd/arpc" icon="cib:github" label="GitHub" />
@@ -55,9 +59,6 @@ import StackedAPIsHighlight from "@/components/homepage/StackedAPIsHighlight.ast
 			function run() {
 				// Make sure the element is still in the DOM.
 				if (typewriterElement!.parentElement === null) return;
-
-				// Set the aria label.
-				typewriterElement!.setAttribute("aria-label", frameworks[i]);
 
 				// Go ahead and write the current string.
 				writer.deleteAll().typeString(frameworks[i]).start();
