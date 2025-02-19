@@ -50,7 +50,7 @@ const pageTitle = title ? `${title} | arpc` : "arpc";
                     document.addEventListener("astro:page-load", async () => {
                         const els = document.querySelectorAll("[data-logo-dark-fix]");
                         for (const el of els) {
-                            // Parse the SVG. TS is wrong here.
+                            // Parse the SVG.
                             const parsedSvg = new DOMParser().parseFromString(
                                 await FAVICON_FETCH_RESULT, "image/svg+xml",
                             ).documentElement;
