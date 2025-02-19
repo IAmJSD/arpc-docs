@@ -42,33 +42,33 @@ import StackedAPIsHighlight from "@/components/homepage/StackedAPIsHighlight.ast
 			<StackedAPIsHighlight />
 		</main>
 	</div>
-</MainLayout>
 
-<script>
-	import { frameworks } from "@/components/homepage/shared";
-
-	// @ts-expect-error: no declaration file
-	import Typewriter from "typewriter-effect/dist/core";
-
-	// Defines the typewriter effect but accessible.
-	document.addEventListener("astro:page-load", () => {
-		const typewriterElement = document.getElementById("_hero_typewriter");
-		if (typewriterElement) {
-			const writer = new Typewriter(typewriterElement);
-			let i = 0;
-			function run() {
-				// Make sure the element is still in the DOM.
-				if (typewriterElement!.parentElement === null) return;
-
-				// Go ahead and write the current string.
-				writer.deleteAll().typeString(frameworks[i]).start();
-
-				// Spawn a new iteration.
-				i++;
-				if (i === frameworks.length) i = 0;
-				setTimeout(run, 2000);
+	<script>
+		import { frameworks } from "@/components/homepage/shared";
+	
+		// @ts-expect-error: no declaration file
+		import Typewriter from "typewriter-effect/dist/core";
+	
+		// Defines the typewriter effect but accessible.
+		document.addEventListener("astro:page-load", () => {
+			const typewriterElement = document.getElementById("_hero_typewriter");
+			if (typewriterElement) {
+				const writer = new Typewriter(typewriterElement);
+				let i = 0;
+				function run() {
+					// Make sure the element is still in the DOM.
+					if (typewriterElement!.parentElement === null) return;
+	
+					// Go ahead and write the current string.
+					writer.deleteAll().typeString(frameworks[i]).start();
+	
+					// Spawn a new iteration.
+					i++;
+					if (i === frameworks.length) i = 0;
+					setTimeout(run, 2000);
+				}
+				run();
 			}
-			run();
-		}
-	});
-</script>
+		});
+	</script>	
+</MainLayout>
